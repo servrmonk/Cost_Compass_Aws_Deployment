@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 
 const FgtPwd = require("../models/ForgotPasswordRequestsModel");
 const User = require("../models/UserModel");

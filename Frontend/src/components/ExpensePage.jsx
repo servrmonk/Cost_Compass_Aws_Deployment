@@ -218,7 +218,7 @@ export default function ExpensePage() {
 
       {isPremiumUser && previousDownloadExpense.length > 0 && (
         <div className="max-h-fit h-fit bg-neutral-100 mt-8 hover:bg-slate-50 w-auto max-w-fit shadow-inner mx-5 rounded-md p-5">
-          {previousDownloadExpense.map((exp, index) => (
+          {previousDownloadExpense?.map((exp, index) => (
             <div key={index} className="mb-4">
               <span className="h-[90%] bg-teal-800 p-2 rounded-xl mr-3 text-xl font-medium text-white">
                 Previous Expense {exp.id}

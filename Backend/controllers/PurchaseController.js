@@ -1,5 +1,5 @@
 // At the very top of your main entry file
-require("dotenv").config();
+// require("dotenv").config();
 
 const Razorpay = require("razorpay");
 const Order = require("../models/OrderModel");

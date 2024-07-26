@@ -1,10 +1,12 @@
 import axios from "axios";
-import { createContext, useDebugValue, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+// require("dotenv").config();
 
 export const UserContext = createContext();
 
 const axiosInstance = axios.create({
-  baseURL: "http://127.0.0.1:3002",
+  // baseURL: "http://127.0.0.1:3002/api",
+  baseURL: import.meta.env.VITE_BASEURL,
 });
 
 const UserContextProvider = ({ children }) => {
@@ -163,8 +165,6 @@ const UserContextProvider = ({ children }) => {
               },
             }
           );
-          // console.log("userData requestId ", response);
-          // console.log("userData in if Block and before put req", userData);
           if (response.data.isActive && userData.password) {
             // now make the password and isActive Updation
             try {
@@ -241,8 +241,8 @@ const UserContextProvider = ({ children }) => {
   };
 
   const getExpenseAqPagination = async (rowsPerPage, page) => {
-    console.log("Rowperpage in getexpensepagination ",rowsPerPage);
-    console.log("page in getexpensepagination ",page);
+    console.log("Rowperpage in getexpensepagination ", rowsPerPage);
+    console.log("page in getexpensepagination ", page);
     try {
       const response = await axiosInstance.get(
         `/expense/getExpenseForPagination?rowsperpage=${rowsPerPage}&page=${page}`,
@@ -250,7 +250,7 @@ const UserContextProvider = ({ children }) => {
           headers: { Authorization: tokenId },
         }
       );
-      console.log("Response.data ",response.data);
+      console.log("Response.data ", response.data);
       setUserExpense(response.data.expenses);
       setTotalPages(Math.ceil(response.data.totalCount / rowsPerPage));
       setCurrentPage(page);
@@ -258,28 +258,27 @@ const UserContextProvider = ({ children }) => {
       console.error("Failed to fetch paginated expenses", err);
     }
   };
-  console.log("Current page in context ",currentPage);
-  console.log("Total page in context ",totalPages);
+  console.log("Current page in context ", currentPage);
+  console.log("Total page in context ", totalPages);
 
-  // DOWNLOADPREVIOUSEXPENSE IS COMMENTED BC UNNECESSARY AWS REQUEST 
-<<<<<<< HEAD
+  // DOWNLOADPREVIOUSEXPENSE IS COMMENTED BC UNNECESSARY AWS REQUEST
+
   useEffect(() => {
     downloadPreviousExpense();
     // getExpenseAqPagination(10, 1);
   }, []);
-=======
+
   // useEffect(() => {
   //   // downloadPreviousExpense();
   //   getExpenseAqPagination(10, 1);
   // }, []);
->>>>>>> 03cf1f03e498ce89640c198f971e0f89da44f922
 
   useEffect(() => {
     // tokenId && fetchExpenses();
     handleLeaderBoard();
   }, [login]);
   // downloadPreviousExpense();
-  
+
   return (
     <UserContext.Provider
       value={{

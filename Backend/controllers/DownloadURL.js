@@ -5,7 +5,7 @@ const DownloadController = {
     try {
       const dbResult = await DownloadURL.findAll({
         where: { email: req.user.email },
-        // order: [["CreatedAt", "ACS"]],
+
       });
       res.send(dbResult);
     } catch (error) {

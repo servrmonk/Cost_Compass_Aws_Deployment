@@ -4,7 +4,7 @@ import { UserContext } from "../store/context";
 import { useNavigate } from "react-router-dom";
 
 export default function SignupPage() {
-  const { login, setLogin,setPremiumUser } = useContext(UserContext);
+  const { login, setLogin, setPremiumUser } = useContext(UserContext);
   const [loginStatus, setLoginStatus] = useState(false);
   const emailRef = useRef(null);
   const nameRef = useRef(null);
@@ -12,13 +12,15 @@ export default function SignupPage() {
   const confirmPasswordRef = useRef(null);
   const navigate = useNavigate();
 
+  const baseUrl = import.meta.env.VITE_BASEURL;
+  console.log("Baseurl is ",baseUrl);
+
   const loginHandler = (data) => {
-    
     // console.log("Data in login handler ",data);
     setLogin(true);
     localStorage.setItem("userToken", `${data.token}`);
-    localStorage.setItem("premium",`${data.premium}`);
-    setPremiumUser(data.premium)
+    localStorage.setItem("premium", `${data.premium}`);
+    setPremiumUser(data.premium);
   };
 
   const submitHandler = async (e) => {
@@ -36,12 +38,12 @@ export default function SignupPage() {
 
     try {
       const endpoint = loginStatus
-        ? `http://localhost:3002/user/login`
-        : `http://localhost:3002/user/signup`;
+        ? `${baseUrl}/user/login`
+        : `${baseUrl}/user/signup`;
       // console.log("Inside the try catch block ");
       const response = await axios.post(endpoint, { name, email, password });
-      console.log('Response in signup page',response);
-      loginHandler(response.data); 
+      console.log("Response in signup page", response);
+      loginHandler(response.data);
       navigate("/userExpense");
     } catch (error) {
       console.error(
